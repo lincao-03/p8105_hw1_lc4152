@@ -1,0 +1,23 @@
+---
+title: "p8105_hw1_lc4152"
+author: "Lin Cao"
+date: "2026-09-21"
+output: github_document
+---
+
+# Problem 1
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+The `penguins` dataset contains information about penguins, including their species (`r paste(unique(penguins$species), collapse = ', ')`); island (`r paste(unique(penguins$island), collapse = ', ')`); bill length; bill depth; flipper length; body mass; sex (`r paste(unique(penguins$sex), collapse = ', ')`); and year of observation (`r paste(unique(penguins$year), collapse = ', ')`).
+
+The size of the dataset is `r nrow(penguins)` observations and `r ncol(penguins)` variables. The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
+
+```{r}
+library(tidyverse)
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+```
+
+
+
+

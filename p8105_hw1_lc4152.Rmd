@@ -6,15 +6,20 @@ output: github_document
 ---
 
 # Problem 1
+
+```{r}
+library(tidyverse)
+```
+
 ```{r}
 data("penguins", package = "palmerpenguins")
+penguins
 ```
 The `penguins` dataset contains information about penguins, including their species (`r paste(unique(penguins$species), collapse = ', ')`); island (`r paste(unique(penguins$island), collapse = ', ')`); bill length; bill depth; flipper length; body mass; sex (`r paste(unique(penguins$sex), collapse = ', ')`); and year of observation (`r paste(unique(penguins$year), collapse = ', ')`).
 
 The size of the dataset is `r nrow(penguins)` observations and `r ncol(penguins)` variables. The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
 
 ```{r}
-library(tidyverse)
 penguins_plot = 
   ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 penguins_plot
@@ -23,4 +28,61 @@ penguins_plot
 ```{r}
 ggsave("scatterplot.png", plot = penguins_plot)
 ```
+
+
+## Problem 2
+```{r}
+set.seed(1)
+problem2_df = 
+  tibble(
+    sample_random = rnorm(10),
+    vec_positive = sample_random > 0,
+    vec_char = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
+    vec_factor = factor(c("A", "B", "A", "A", "C", "B", "C", "B", "B", "A"))
+  )
+problem2_df
+```
+
+Take the mean of each variable.
+
+```{r}
+mean(pull(problem2_df, sample_random))
+mean(pull(problem2_df, vec_positive))
+mean(pull(problem2_df, vec_char))
+mean(pull(problem2_df, vec_factor))
+```
+
+The mean works for `sample_random` and `vec_positive`, which are numeric and logical variables. It doesn't work for `vec_char` and `vec_factor`.
+
+Apply `as.numeric` to logical, char, and factor.
+
+```{r, results='hide', warning=FALSE}
+as.numeric(pull(problem2_df, vec_positive))
+as.numeric(pull(problem2_df, vec_char))
+as.numeric(pull(problem2_df, vec_factor))
+```
+
+
+Converting the logical variable to numeric changes `TRUE` to 1 and `FALSE` to 0. This explains why taking the mean of a logical variable works.
+
+For character, it produces `NA` values because the character strings cannot be interpreted as numbers.
+
+For factor variable, it returns the integer codes corresponding to the factor levels. 
+
+Therefore, these numbers represent the internal coding of the factor levels and do not necessarily have a meaningful numerical interpretation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

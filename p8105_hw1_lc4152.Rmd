@@ -19,7 +19,7 @@ The `penguins` dataset contains information about penguins, including their spec
 
 The size of the dataset is `r nrow(penguins)` observations and `r ncol(penguins)` variables. The mean flipper length is `r round(mean(penguins$flipper_length_mm, na.rm = TRUE), 2)` mm.
 
-```{r}
+```{r penguins}
 penguins_plot = 
   ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 penguins_plot
